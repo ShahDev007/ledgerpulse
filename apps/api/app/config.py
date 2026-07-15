@@ -8,11 +8,19 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 def _resolve_async_url() -> str:
-    """Prefer DATABASE_URL; otherwise derive an asyncpg URL from Vercel Postgres env vars."""
-    url = os.getenv("DATABASE_URL")
-    if not url:
-        # Vercel/Neon provide POSTGRES_URL (libpq form); prefer the non-pooling one for DDL.
-        url = os.getenv("POSTGRES_URL_NON_POOLING") or os.getenv("POSTGRES_URL")
+    """Derive an asyncpg URL from whatever the host injects.
+
+    Prefer the *unpooled* (direct) endpoint: asyncpg's prepared statements are incompatible with
+    Neon/Vercel's pgbouncer transaction pooler, and DDL during bootstrap needs a direct connection.
+    Neon-on-Vercel injects DATABASE_URL_UNPOOLED (direct) + DATABASE_URL (pooled); older Vercel
+    Postgres injects POSTGRES_URL_NON_POOLING + POSTGRES_URL.
+    """
+    url = (
+        os.getenv("DATABASE_URL_UNPOOLED")
+        or os.getenv("POSTGRES_URL_NON_POOLING")
+        or os.getenv("DATABASE_URL")
+        or os.getenv("POSTGRES_URL")
+    )
     if not url:
         return "postgresql+asyncpg://ledgerpulse:ledgerpulse@postgres:5432/ledgerpulse"
     # Normalize scheme to asyncpg and strip libpq-only query params (sslmode) asyncpg rejects.
