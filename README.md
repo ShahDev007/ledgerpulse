@@ -3,6 +3,53 @@
 **AI-native invoice tracking, cost governance, and portfolio intelligence for a vertically
 integrated multifamily operator.** Interview concept for the Cadence Founding AI Engineer project.
 
+**▶ Live demo:** https://ledgerpulse-q9aa.vercel.app — open it, pick a persona (top-right), and click around.
+
+---
+
+## 📖 What is this? (in plain English — no jargon)
+
+Imagine a company that owns a bunch of **apartment buildings**. Every day, lots of people send it
+**bills** ("you owe me money") — the plumber who fixed a sink, the electric company, the gardener,
+the builders renovating a unit. That's a mountain of paper, and someone has to check every bill:
+*Is it real? Is the amount right? Did we already pay it? Who's allowed to approve it?* Doing that by
+hand is slow and easy to get wrong — you can even **pay the same bill twice** and lose money.
+
+**LedgerPulse is a smart assistant that reads all those bills for them.** It does four things:
+
+1. **Reads the bill automatically** — you give it a picture of a bill and AI pulls out who sent it,
+   how much, and what for (real AI, reading the real document).
+2. **Catches mistakes and tricks** — e.g. the same $1,240 electric bill sent twice with one letter
+   changed to hide it. The assistant flags it: *"You already paid this — don't pay again."*
+3. **Explains itself** — click **"Investigate with AI"** and it writes, in plain English, *why*
+   something looks wrong and shows its evidence. Crucial safety rule: **the AI only advises. It can
+   never approve or pay anything by itself — a human always decides.**
+4. **Shows the right bills to the right people** — the money team sees every bill; a building
+   manager sees only their building; a construction manager sees only their project.
+
+**Why it matters:** it turns *"Where is that bill and did we pay it?"* into *"Every bill is sorted,
+checked for mistakes, and watched by a smart helper — with no human wasting hours on it."*
+
+### What the home screen ("Command Center") shows
+It's a front-desk summary for whoever is logged in. Each box is a simple count:
+
+| Box | What it means, plainly |
+|---|---|
+| **Total invoices** | How many bills are in the system. |
+| **Needs review / matched** | Bills that look clean and correct. ✅ |
+| **Pending approval** | Bills waiting for a person to say "yes, pay it." |
+| **Open exceptions** | Bills with a **problem** that needs a human. ⚠️ |
+| **Blocking (duplicates etc.)** | Problems serious enough to **freeze the bill** (e.g. a double-charge). 🛑 |
+| **Duplicate-risk invoices** | Bills that look like a **repeat** of one already paid. |
+| **Unbudgeted flags** | Bills for something **nobody planned to spend on** — a surprise cost. |
+| **Open exposure** | Total money tied up in unpaid bills — "how much is on the table." 💵 |
+| **Lifecycle** | The split of clean bills vs. bills with problems. |
+
+*Tip: the numbers change depending on who's logged in — a building manager only sees their own
+building's bills, so their totals are smaller than the company-wide finance team's.*
+
+---
+
 > An invoice is not a PDF to be keyed into accounting — it is an *operational event* linking a
 > vendor, property, entity, work order, contract, budget, GL code, approver, payment, and
 > ultimately investment performance. LedgerPulse builds that connected layer while keeping
