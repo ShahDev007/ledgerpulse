@@ -38,10 +38,20 @@ class Settings(BaseSettings):
     app_env: str = "local"
     auth_secret: str = "dev-only-change-me"
     admin_token: str = "dev-admin-token"
-
-    database_url: str = _resolve_async_url()
-    database_url_sync: str = "postgresql+psycopg://ledgerpulse:ledgerpulse@postgres:5432/ledgerpulse"
     redis_url: str = "redis://redis:6379/0"
+
+    # NOTE: database_url is a *property*, not a field, on purpose. If it were a field, pydantic
+    # would bind it to the DATABASE_URL env var and use Neon's raw libpq URL (postgresql://…),
+    # which selects the psycopg2 sync driver and crashes. As a property it always runs through
+    # _resolve_async_url() → guaranteed postgresql+asyncpg scheme.
+    @property
+    def database_url(self) -> str:
+        return _resolve_async_url()
+
+    @property
+    def database_url_sync(self) -> str:
+        # psycopg (v3) sync URL, used only by Alembic — never in the serverless path.
+        return _resolve_async_url().replace("postgresql+asyncpg://", "postgresql+psycopg://")
 
     @property
     def serverless(self) -> bool:
