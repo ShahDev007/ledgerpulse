@@ -62,14 +62,17 @@ COST_CODES = [
     ("cc_sitework", "02-100", "Sitework / Landscaping"),
 ]
 
+# Scope shapes each persona's view (ABAC). Operational roles are narrowed to the
+# properties/projects they run; control roles (AP, Finance, Director, Auditor) are org-wide
+# on purpose — a controller or auditor with a partial view would be wrong.
 PERSONAS = [
-    ("ap@ledgerpulse.local", "Alex Park (AP Accountant)", Role.AP_ACCOUNTANT, None),
+    ("ap@ledgerpulse.local", "Alex Park (AP Accountant)", Role.AP_ACCOUNTANT, None),  # org-wide
     ("pm@ledgerpulse.local", "Priya Nair (Property Manager)", Role.PROPERTY_MANAGER, ["prop_park"]),
-    ("cpm@ledgerpulse.local", "Chris Reyes (Construction PM)", Role.CONSTRUCTION_PM, ["prop_park"]),
-    ("asset@ledgerpulse.local", "Sam Ito (Asset Manager)", Role.ASSET_MANAGER, None),
-    ("finadmin@ledgerpulse.local", "Dana Lee (Finance Admin)", Role.FINANCE_ADMIN, None),
-    ("director@ledgerpulse.local", "Morgan Blake (Director of Finance)", Role.DIRECTOR_FINANCE, None),
-    ("auditor@ledgerpulse.local", "Jordan Cole (Auditor)", Role.AUDITOR, None),
+    ("cpm@ledgerpulse.local", "Chris Reyes (Construction PM)", Role.CONSTRUCTION_PM, ["prop_maple"]),
+    ("asset@ledgerpulse.local", "Sam Ito (Asset Manager)", Role.ASSET_MANAGER, ["prop_cedar", "prop_maple"]),
+    ("finadmin@ledgerpulse.local", "Dana Lee (Finance Admin)", Role.FINANCE_ADMIN, None),  # org-wide
+    ("director@ledgerpulse.local", "Morgan Blake (Director of Finance)", Role.DIRECTOR_FINANCE, None),  # org-wide
+    ("auditor@ledgerpulse.local", "Jordan Cole (Auditor)", Role.AUDITOR, None),  # org-wide
 ]
 
 
