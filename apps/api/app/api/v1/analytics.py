@@ -37,7 +37,16 @@ async def stats(
     session: AsyncSession = Depends(get_session),
 ):
     principal.require("view")
-    invs = (await session.execute(select(Invoice))).scalars().all()
+    # ABAC: property-scoped roles (e.g. Property Manager) see only their properties'
+    # invoices — plus not-yet-resolved ones — exactly like the inbox list. Org-wide roles
+    # (AP, Finance, Asset, Auditor) have no scope and see everything.
+    inv_q = select(Invoice)
+    if principal.property_scope:
+        inv_q = inv_q.where(
+            (Invoice.property_id.in_(principal.property_scope)) | (Invoice.property_id.is_(None))
+        )
+    invs = (await session.execute(inv_q)).scalars().all()
+    scoped_ids = [i.id for i in invs]
     by_status: dict[str, int] = {}
     exposure = Decimal("0")
     dup = 0
@@ -55,18 +64,16 @@ async def stats(
         if "UNBUDGETED_SPEND" in flags or "OVER_BUDGET" in flags:
             unbudget += 1
 
-    open_exc = (
-        await session.execute(
-            select(func.count()).select_from(Exception_).where(Exception_.resolution_status == "OPEN")
-        )
-    ).scalar_one()
-    blocking = (
-        await session.execute(
-            select(func.count()).select_from(Exception_).where(
-                Exception_.resolution_status == "OPEN", Exception_.severity == "BLOCKING"
-            )
-        )
-    ).scalar_one()
+    # Count exceptions only for the invoices this persona can see.
+    open_q = select(func.count()).select_from(Exception_).where(
+        Exception_.resolution_status == "OPEN", Exception_.invoice_id.in_(scoped_ids)
+    )
+    blocking_q = select(func.count()).select_from(Exception_).where(
+        Exception_.resolution_status == "OPEN", Exception_.severity == "BLOCKING",
+        Exception_.invoice_id.in_(scoped_ids),
+    )
+    open_exc = (await session.execute(open_q)).scalar_one() if scoped_ids else 0
+    blocking = (await session.execute(blocking_q)).scalar_one() if scoped_ids else 0
 
     return Stats(
         total_invoices=len(invs),

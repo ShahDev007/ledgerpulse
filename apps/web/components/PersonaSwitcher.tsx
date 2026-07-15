@@ -1,13 +1,12 @@
 "use client";
 
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { api, setToken, getToken, Persona, TokenResponse } from "@/lib/api";
 import { useEffect, useState } from "react";
 
 // Persona switcher (Phase 1 acceptance): pick a seeded persona, receive a signed
 // session token, and see the capabilities that RBAC will enforce server-side.
 export function PersonaSwitcher() {
-  const qc = useQueryClient();
   const [active, setActive] = useState<Persona | null>(null);
 
   const personas = useQuery({
@@ -38,9 +37,13 @@ export function PersonaSwitcher() {
     mutationFn: (id: string) =>
       api<TokenResponse>(`/v1/personas/${id}/session`, { method: "POST" }),
     onSuccess: (data) => {
+      // Persist the new identity, then hard-reload the current page so every panel
+      // refetches under the new persona. This avoids react-query `enabled`-gating edge
+      // cases (a freshly logged-in page not re-running queries that were disabled while
+      // logged out) and makes the switch unambiguous during a demo.
       setToken(data.access_token);
       setActive(data.persona);
-      qc.invalidateQueries();
+      if (typeof window !== "undefined") window.location.reload();
     },
   });
 
