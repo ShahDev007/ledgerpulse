@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+
+# Node
+node_modules/
+.next/
+.turbo/
+dist/
+*.tsbuildinfo
+
+# Env / secrets
+.env
+.env.local
+!.env.example
+
+# Data / local volumes
+/infra/volumes/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel/
+
+# Playwright MCP artifacts + demo screenshots (kept out of the repo)
+.playwright-mcp/
+/phase*.png
+/*.log
+
+# Test / coverage
+coverage/
+htmlcov/
+.coverage
+playwright-report/
+test-results/

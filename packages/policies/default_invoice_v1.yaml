@@ -1,0 +1,15 @@
+# Default operating-invoice policy (AP prepares; property + finance approve).
+policy: default_invoice_v1
+version: 1
+when:
+  all:
+    - "invoice.total < 5000"
+steps:
+  - role: PROPERTY_MANAGER
+    scope: invoice.property_id
+  - role: FINANCE_ADMIN
+    when: "invoice.total >= 2500"
+controls:
+  submitter_cannot_approve: true
+  escalation_after_hours: 48
+  allow_delegation: true

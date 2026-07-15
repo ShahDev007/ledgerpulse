@@ -1,0 +1,20 @@
+- generic [ref=f2e2]:
+  - banner [ref=f2e3]:
+    - generic [ref=f2e4]:
+      - generic [ref=f2e5]:
+        - generic [ref=f2e6]: LedgerPulse
+        - navigation [ref=f2e7]:
+          - link "Command Center" [ref=f2e8] [cursor=pointer]:
+            - /url: /
+          - link "Inbox" [ref=f2e9] [cursor=pointer]:
+            - /url: /inbox
+          - link "Approvals" [ref=f2e10] [cursor=pointer]:
+            - /url: /approvals
+          - link "Exceptions" [ref=f2e11] [cursor=pointer]:
+            - /url: /exceptions
+      - combobox [ref=f2e13]:
+        - option "Loading personas…" [disabled] [selected]
+  - main [ref=f2e14]:
+    - generic [ref=f2e15]:
+      - heading "Welcome to LedgerPulse" [level=1] [ref=f2e16]
+      - paragraph [ref=f2e17]: Select a persona in the top-right to sign in.

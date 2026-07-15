@@ -1,0 +1,9 @@
+infra/
+apps/worker/
+apps/mock-erp/
+node_modules/
+.next/
+.playwright-mcp/
+*.png
+*.log
+tests/

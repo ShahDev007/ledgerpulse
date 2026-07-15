@@ -1,0 +1,1 @@
+"""LedgerPulse Celery worker package."""

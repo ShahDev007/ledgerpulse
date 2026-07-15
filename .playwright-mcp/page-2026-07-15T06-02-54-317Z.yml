@@ -1,0 +1,93 @@
+- generic [active] [ref=f2e1]:
+  - generic [ref=f2e18]:
+    - banner [ref=f2e19]:
+      - generic [ref=f2e20]:
+        - generic [ref=f2e21]:
+          - generic [ref=f2e22]: LedgerPulse
+          - navigation [ref=f2e23]:
+            - link "Command Center" [ref=f2e24] [cursor=pointer]:
+              - /url: /
+            - link "Inbox" [ref=f2e25] [cursor=pointer]:
+              - /url: /inbox
+            - link "Approvals" [ref=f2e26] [cursor=pointer]:
+              - /url: /approvals
+            - link "Exceptions" [ref=f2e27] [cursor=pointer]:
+              - /url: /exceptions
+        - generic [ref=f2e28]:
+          - generic [ref=f2e29]: Alex Park (AP Accountant) · AP_ACCOUNTANT
+          - combobox [ref=f2e30]:
+            - option "Switch persona" [disabled]
+            - option "Alex Park (AP Accountant)" [selected]
+            - option "Chris Reyes (Construction PM)"
+            - option "Dana Lee (Finance Admin)"
+            - option "Jordan Cole (Auditor)"
+            - option "Morgan Blake (Director of Finance)"
+            - option "Priya Nair (Property Manager)"
+            - option "Sam Ito (Asset Manager)"
+    - main [ref=f2e31]:
+      - generic [ref=f2e32]:
+        - generic [ref=f2e33]:
+          - heading "Command Center" [level=1] [ref=f2e34]
+          - paragraph [ref=f2e35]:
+            - text: Signed in as
+            - strong [ref=f2e36]: Alex Park (AP Accountant)
+            - text: (AP_ACCOUNTANT). From “Where is this invoice?” to “What does this cost mean?”
+        - generic [ref=f2e37]:
+          - link "Total invoices 8" [ref=f2e38] [cursor=pointer]:
+            - /url: /inbox
+            - generic [ref=f2e39]:
+              - generic [ref=f2e40]: Total invoices
+              - generic [ref=f2e41]: "8"
+          - link "Needs review / matched 2" [ref=f2e42] [cursor=pointer]:
+            - /url: /inbox
+            - generic [ref=f2e43]:
+              - generic [ref=f2e44]: Needs review / matched
+              - generic [ref=f2e45]: "2"
+          - link "Pending approval 1" [ref=f2e46] [cursor=pointer]:
+            - /url: /approvals
+            - generic [ref=f2e47]:
+              - generic [ref=f2e48]: Pending approval
+              - generic [ref=f2e49]: "1"
+          - link "Open exceptions 5" [ref=f2e50] [cursor=pointer]:
+            - /url: /exceptions
+            - generic [ref=f2e51]:
+              - generic [ref=f2e52]: Open exceptions
+              - generic [ref=f2e53]: "5"
+          - link "Blocking (duplicates etc.) 1" [ref=f2e54] [cursor=pointer]:
+            - /url: /exceptions
+            - generic [ref=f2e55]:
+              - generic [ref=f2e56]: Blocking (duplicates etc.)
+              - generic [ref=f2e57]: "1"
+          - generic [ref=f2e58]:
+            - generic [ref=f2e59]: Duplicate-risk invoices
+            - generic [ref=f2e60]: "1"
+          - generic [ref=f2e61]:
+            - generic [ref=f2e62]: Unbudgeted flags
+            - generic [ref=f2e63]: "1"
+          - generic [ref=f2e64]:
+            - generic [ref=f2e65]: Open exposure
+            - generic [ref=f2e66]: $88,226
+        - generic [ref=f2e67]:
+          - heading "Lifecycle" [level=2] [ref=f2e68]
+          - generic [ref=f2e69]:
+            - generic [ref=f2e70]:
+              - text: "EXCEPTION:"
+              - strong [ref=f2e71]: "4"
+            - generic [ref=f2e72]:
+              - text: "MATCHED:"
+              - strong [ref=f2e73]: "2"
+            - generic [ref=f2e74]:
+              - text: "APPROVED:"
+              - strong [ref=f2e75]: "1"
+            - generic [ref=f2e76]:
+              - text: "APPROVAL_PENDING:"
+              - strong [ref=f2e77]: "1"
+  - generic:
+    - generic [ref=f2e80] [cursor=pointer]:
+      - generic [ref=f2e83]: 1 error
+      - button "Hide Errors" [ref=f2e84]
+    - status [ref=f2e88]:
+      - generic [ref=f2e93]:
+        - text: Static route
+        - button "Hide static indicator" [ref=f2e94] [cursor=pointer]
+  - alert [ref=f2e98]

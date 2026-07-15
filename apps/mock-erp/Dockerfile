@@ -1,0 +1,8 @@
+FROM python:3.12-slim
+ENV PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1
+WORKDIR /app
+COPY apps/mock-erp/pyproject.toml /app/pyproject.toml
+COPY apps/mock-erp/main.py /app/main.py
+RUN pip install --upgrade pip && pip install -e /app
+EXPOSE 4010
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "4010"]

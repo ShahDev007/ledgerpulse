@@ -1,0 +1,52 @@
+- generic [ref=f2e1]:
+  - generic [ref=f2e18]:
+    - banner [ref=f2e19]:
+      - generic [ref=f2e20]:
+        - generic [ref=f2e21]:
+          - generic [ref=f2e22]: LedgerPulse
+          - navigation [ref=f2e23]:
+            - link "Command Center" [ref=f2e24] [cursor=pointer]:
+              - /url: /
+            - link "Inbox" [ref=f2e25] [cursor=pointer]:
+              - /url: /inbox
+            - link "Approvals" [ref=f2e26] [cursor=pointer]:
+              - /url: /approvals
+            - link "Exceptions" [ref=f2e27] [cursor=pointer]:
+              - /url: /exceptions
+            - link "Copilot" [ref=f2e28] [cursor=pointer]:
+              - /url: /copilot
+            - link "AI" [ref=f2e29] [cursor=pointer]:
+              - /url: /ai
+        - generic [ref=f2e30]:
+          - generic [ref=f2e31]: Priya Nair (Property Manager) · PROPERTY_MANAGER
+          - combobox [ref=f2e32]:
+            - option "Switch persona" [disabled]
+            - option "Alex Park (AP Accountant)"
+            - option "Chris Reyes (Construction PM)"
+            - option "Dana Lee (Finance Admin)"
+            - option "Jordan Cole (Auditor)"
+            - option "Morgan Blake (Director of Finance)"
+            - option "Priya Nair (Property Manager)" [selected]
+            - option "Sam Ito (Asset Manager)"
+    - main [ref=f2e33]:
+      - generic [ref=f2e34]:
+        - generic [ref=f2e35]:
+          - heading "Invoice Copilot" [level=1] [ref=f2e36]
+          - paragraph [ref=f2e37]: Natural language is a view over controlled data — answers are grounded in invoices you’re permitted to see, with citations.
+        - generic [ref=f2e38]:
+          - textbox "Ask about invoices, exceptions, vendors, budgets…" [ref=f2e39]: Which invoices are possible duplicates or blocked, and why?
+          - button "Thinking…" [disabled] [ref=f2e67]
+        - generic [ref=f2e41]:
+          - button "Which invoices are possible duplicates or blocked, and why?" [active] [ref=f2e42] [cursor=pointer]
+          - button "How much do we owe Summit General Contractors, and is any of it unbudgeted?" [ref=f2e43] [cursor=pointer]
+          - button "Which approved invoices are due in the next two weeks?" [ref=f2e44] [cursor=pointer]
+          - button "Show plumbing and electricity costs at Park & Parkside." [ref=f2e45] [cursor=pointer]
+  - generic:
+    - generic [ref=f2e48] [cursor=pointer]:
+      - generic [ref=f2e51]: 1 error
+      - button "Hide Errors" [ref=f2e52]
+    - status [ref=f2e56]:
+      - generic [ref=f2e61]:
+        - text: Static route
+        - button "Hide static indicator" [ref=f2e62] [cursor=pointer]
+  - alert [ref=f2e66]

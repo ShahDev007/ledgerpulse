@@ -1,0 +1,18 @@
+- generic [ref=f1e2]:
+  - banner [ref=f1e3]:
+    - generic [ref=f1e4]:
+      - generic [ref=f1e5]:
+        - generic [ref=f1e6]: LedgerPulse
+        - navigation [ref=f1e7]:
+          - link "Command Center" [ref=f1e8] [cursor=pointer]:
+            - /url: /
+          - link "Inbox" [ref=f1e9] [cursor=pointer]:
+            - /url: /inbox
+          - link "Approvals" [ref=f1e10] [cursor=pointer]:
+            - /url: /approvals
+          - link "Exceptions" [ref=f1e11] [cursor=pointer]:
+            - /url: /exceptions
+      - combobox [ref=f1e13]:
+        - option "Loading personas…" [disabled] [selected]
+  - main [ref=f1e14]:
+    - paragraph [ref=f1e15]: Select a persona to view this invoice.

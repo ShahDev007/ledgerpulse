@@ -1,0 +1,20 @@
+# Versioned approval policy (Section 7.4). Loaded into approval_policies and immutable
+# once active. The Policy & Approval Service (Phase 5) evaluates this DSL.
+policy: construction_invoice_v3
+version: 3
+when:
+  all:
+    - "invoice.category == 'CONSTRUCTION'"
+    - "invoice.total >= 5000"
+steps:
+  - role: CONSTRUCTION_PM
+    scope: invoice.project_id
+  - role: ASSET_MANAGER
+    when: "invoice.budget_variance_pct > 5 OR invoice.total >= 25000"
+  - role: DIRECTOR_FINANCE
+    when: "invoice.total >= 50000 OR invoice.is_unbudgeted == true"
+controls:
+  submitter_cannot_approve: true
+  require_change_order_if_commitment_exceeded: true
+  escalation_after_hours: 48
+  allow_delegation: true

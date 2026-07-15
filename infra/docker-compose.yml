@@ -1,0 +1,200 @@
+# LedgerPulse local stack. Run from repo root via `make dev`
+# (which invokes: docker compose -f infra/docker-compose.yml up).
+# Build context is the repo root (..) so images can copy shared services/ packages.
+name: ledgerpulse
+
+x-python-env: &python-env
+  APP_ENV: ${APP_ENV:-local}
+  DATABASE_URL: ${DATABASE_URL}
+  DATABASE_URL_SYNC: ${DATABASE_URL_SYNC}
+  REDIS_URL: ${REDIS_URL}
+  S3_ENDPOINT_URL: ${S3_ENDPOINT_URL}
+  S3_REGION: ${S3_REGION}
+  S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+  S3_SECRET_KEY: ${S3_SECRET_KEY}
+  S3_BUCKET: ${S3_BUCKET}
+  SMTP_HOST: ${SMTP_HOST}
+  SMTP_PORT: ${SMTP_PORT}
+  AP_INBOX_ADDRESS: ${AP_INBOX_ADDRESS}
+  MOCK_ERP_URL: ${MOCK_ERP_URL}
+  AUTH_SECRET: ${AUTH_SECRET}
+  LLM_PROVIDER: ${LLM_PROVIDER:-mock}
+  ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+  LLM_MODEL_CLASSIFY: ${LLM_MODEL_CLASSIFY:-claude-haiku-4-5-20251001}
+  LLM_MODEL_EXTRACT: ${LLM_MODEL_EXTRACT:-claude-sonnet-5}
+  LLM_MODEL_EXTRACT_ESCALATE: ${LLM_MODEL_EXTRACT_ESCALATE:-claude-opus-4-8}
+  LLM_MODEL_CODING: ${LLM_MODEL_CODING:-claude-sonnet-5}
+  LLM_MODEL_INVESTIGATOR: ${LLM_MODEL_INVESTIGATOR:-claude-opus-4-8}
+  LLM_MODEL_COPILOT: ${LLM_MODEL_COPILOT:-claude-sonnet-5}
+  OCR_PROVIDER: ${OCR_PROVIDER:-mock}
+  EMBEDDING_PROVIDER: ${EMBEDDING_PROVIDER:-mock}
+  EMBEDDING_DIM: ${EMBEDDING_DIM:-1024}
+  VOYAGE_API_KEY: ${VOYAGE_API_KEY:-}
+  VOYAGE_MODEL: ${VOYAGE_MODEL:-voyage-3-large}
+  LLM_TIMEOUT_SECONDS: ${LLM_TIMEOUT_SECONDS:-60}
+  LLM_MAX_RETRIES: ${LLM_MAX_RETRIES:-3}
+  LLM_DAILY_TOKEN_BUDGET: ${LLM_DAILY_TOKEN_BUDGET:-2000000}
+
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${S3_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${S3_SECRET_KEY}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - miniodata:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  # Creates the invoice bucket with object-lock/versioning on first boot.
+  minio-init:
+    image: minio/mc:latest
+    depends_on:
+      minio:
+        condition: service_healthy
+    entrypoint: >
+      /bin/sh -c "
+      mc alias set local http://minio:9000 ${S3_ACCESS_KEY} ${S3_SECRET_KEY} &&
+      mc mb --ignore-existing local/${S3_BUCKET} &&
+      mc version enable local/${S3_BUCKET} || true
+      "
+    restart: "no"
+
+  mailpit:
+    image: axllent/mailpit:latest
+    ports:
+      - "${MAILPIT_UI_PORT:-8025}:8025"
+      - "1025:1025"
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: "true"
+      MP_SMTP_AUTH_ALLOW_INSECURE: "true"
+
+  mock-erp:
+    build:
+      context: ..
+      dockerfile: apps/mock-erp/Dockerfile
+    environment:
+      <<: *python-env
+    ports:
+      - "4010:4010"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:4010/health')"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  api:
+    build:
+      context: ..
+      dockerfile: apps/api/Dockerfile
+    environment:
+      <<: *python-env
+    ports:
+      - "${API_PORT:-8000}:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      mock-erp:
+        condition: service_started
+    # Applies migrations + seeds master data, then serves the API.
+    command: >
+      /bin/sh -c "
+      python -m app.bootstrap &&
+      uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+      "
+    volumes:
+      - ../apps/api:/app/apps/api
+      - ../services:/app/services
+      - ../fixtures:/app/fixtures
+      - ../packages/policies:/app/packages/policies
+
+  worker:
+    build:
+      context: ..
+      dockerfile: apps/worker/Dockerfile
+    environment:
+      <<: *python-env
+    depends_on:
+      api:
+        condition: service_started
+      redis:
+        condition: service_healthy
+    command: >
+      celery -A worker.celery_app.app worker --loglevel=info --concurrency=4
+    volumes:
+      - ../apps/worker:/app/apps/worker
+      - ../apps/api:/app/apps/api
+      - ../services:/app/services
+      - ../fixtures:/app/fixtures
+      - ../packages/policies:/app/packages/policies
+
+  web:
+    build:
+      context: ..
+      dockerfile: apps/web/Dockerfile
+    environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_API_URL: http://localhost:${API_PORT:-8000}
+      API_INTERNAL_URL: http://api:8000
+      AUTH_SECRET: ${AUTH_SECRET}
+      # Bind-mount inotify is unreliable on Docker Desktop (Windows); poll so new route
+      # files hot-reload without a container restart.
+      WATCHPACK_POLLING: "true"
+      CHOKIDAR_USEPOLLING: "true"
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    depends_on:
+      api:
+        condition: service_started
+    # Bind-mounting source shadows the image's node_modules, so (re)install on start.
+    # The named volumes below keep node_modules out of the bind mount and persist them.
+    command: ["/bin/sh", "-c", "pnpm install && pnpm --filter @ledgerpulse/web dev"]
+    volumes:
+      - ../apps/web:/app/apps/web
+      - ../packages:/app/packages
+      - webnodemodules:/app/node_modules
+      - webappnodemodules:/app/apps/web/node_modules
+
+volumes:
+  pgdata:
+  miniodata:
+  webnodemodules:
+  webappnodemodules:

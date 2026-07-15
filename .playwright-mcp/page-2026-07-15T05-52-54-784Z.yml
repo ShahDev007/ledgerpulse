@@ -1,0 +1,16 @@
+- generic [ref=e2]:
+  - banner [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - generic [ref=e6]: LedgerPulse
+        - navigation [ref=e7]:
+          - link "Command Center" [ref=e8] [cursor=pointer]:
+            - /url: /
+          - link "Inbox" [ref=e9] [cursor=pointer]:
+            - /url: /inbox
+          - link "Exceptions" [ref=e10] [cursor=pointer]:
+            - /url: /exceptions
+      - combobox [ref=e12]:
+        - option "Loading personas…" [disabled] [selected]
+  - main [ref=e13]:
+    - paragraph [ref=e14]: Select a persona to view exceptions.
