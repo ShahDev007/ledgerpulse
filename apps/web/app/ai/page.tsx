@@ -37,7 +37,7 @@ export default function AIDashboard() {
       <div>
         <h1 className="text-2xl font-semibold">AI Model Dashboard</h1>
         <p className="text-navy/70">
-          Every model call is logged with provider, tokens, latency, and cost — governance and
+          Every model call is logged with provider, tokens, latency, and cost - governance and
           evaluation, not a black box.
         </p>
       </div>
@@ -45,15 +45,15 @@ export default function AIDashboard() {
       <div className="grid gap-4 sm:grid-cols-3">
         <div className="rounded-lg border border-navy/10 bg-white p-4 shadow-sm">
           <div className="text-sm text-navy/60">Total model runs</div>
-          <div className="mt-1 text-2xl font-semibold">{d?.total_runs ?? "—"}</div>
+          <div className="mt-1 text-2xl font-semibold">{d?.total_runs ?? "-"}</div>
         </div>
         <div className="rounded-lg border border-navy/10 bg-white p-4 shadow-sm">
           <div className="text-sm text-navy/60">Total cost (est.)</div>
-          <div className="mt-1 text-2xl font-semibold">${d?.total_cost_usd?.toFixed(4) ?? "—"}</div>
+          <div className="mt-1 text-2xl font-semibold">${d?.total_cost_usd?.toFixed(4) ?? "-"}</div>
         </div>
         <div className="rounded-lg border border-navy/10 bg-white p-4 shadow-sm">
           <div className="text-sm text-navy/60">Capabilities in use</div>
-          <div className="mt-1 text-2xl font-semibold">{d?.by_capability.length ?? "—"}</div>
+          <div className="mt-1 text-2xl font-semibold">{d?.by_capability.length ?? "-"}</div>
         </div>
       </div>
 

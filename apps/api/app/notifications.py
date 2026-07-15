@@ -1,7 +1,7 @@
 """Best-effort email via the local Mailpit SMTP sink. Also persists a Notification row.
 
 Used for AP intake acknowledgments (Section 2.4 step 1) and later reminders/digests.
-Failures are swallowed — a mail hiccup must never fail an intake command.
+Failures are swallowed - a mail hiccup must never fail an intake command.
 """
 from __future__ import annotations
 

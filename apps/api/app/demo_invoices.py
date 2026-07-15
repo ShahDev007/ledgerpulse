@@ -1,7 +1,7 @@
 """Synthetic invoice documents for the 8 demo scenarios (Appendix A.6).
 
 Renders realistic invoice PNGs with PIL so live Claude extraction has genuine content to read
-(no hardcoded 'expected' shortcut). All data is fabricated — no real vendors or company data.
+(no hardcoded 'expected' shortcut). All data is fabricated - no real vendors or company data.
 """
 from __future__ import annotations
 

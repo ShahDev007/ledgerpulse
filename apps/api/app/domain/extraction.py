@@ -1,7 +1,7 @@
 """Extraction command: run live Claude on the immutable original and persist the digital twin.
 
 Writes header fields, line items, field-level provenance (page/bbox/confidence/model run), a
-model_runs ledger row, and transitions the invoice to NEEDS_REVIEW — all inside one transaction
+model_runs ledger row, and transitions the invoice to NEEDS_REVIEW - all inside one transaction
 with an audit event (actor=MODEL) and an outbox event.
 """
 from __future__ import annotations

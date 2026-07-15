@@ -1,7 +1,7 @@
 """Read-only exception investigator agent (Section 4.3, Appendix A.5).
 
 A tool-scoped Claude (Opus) agent that runs ONLY when an exception exists. It is given a
-fixed, read-only tool allow-list backed by a pre-loaded evidence snapshot — the model cannot
+fixed, read-only tool allow-list backed by a pre-loaded evidence snapshot - the model cannot
 reach the database, mutate records, send mail, approve, export, or pay. It gathers evidence and
 must cite evidence ids for material claims, then calls submit_findings with the structured
 result. Prohibited tools simply do not exist in its tool list.
@@ -14,7 +14,7 @@ from dataclasses import dataclass, field
 
 from services.llm.config import LLMSettings, get_llm_settings
 
-# Read-only tools (no arguments — all scoped to the single invoice under investigation).
+# Read-only tools (no arguments - all scoped to the single invoice under investigation).
 _READ_TOOLS = [
     ("get_invoice", "Header fields + resolved links for this invoice."),
     ("get_document_evidence", "Field-level provenance (page/bbox/confidence) captured at extraction."),
@@ -128,7 +128,7 @@ def investigate(
                 logs.append(ToolCallLog(tu.name, json.dumps(data)[:200]))
                 results.append({"type": "tool_result", "tool_use_id": tu.id,
                                 "content": json.dumps(data, default=str)})
-            else:  # prohibited / unknown tool — refuse
+            else:  # prohibited / unknown tool - refuse
                 logs.append(ToolCallLog(tu.name, "DENIED: tool not allowed", allowed=False))
                 results.append({"type": "tool_result", "tool_use_id": tu.id,
                                 "content": "ERROR: tool not permitted", "is_error": True})

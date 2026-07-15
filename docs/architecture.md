@@ -9,23 +9,23 @@ recommending coding. Every AI output carries confidence + evidence + model trace
 override path.
 
 ## Services (logical modules across api + worker)
-- **Invoice Service** — ingestion, files, versions, extracted data, lifecycle commands, search.
-- **Master Data Service** — properties, entities, vendors, GL, users, projects, cost codes, WOs.
-- **Match Engine** — duplicate / PO / contract / work-order / budget matching (explainable scores).
-- **Policy & Approval Service** — versioned policy DSL, approval steps, delegation, escalation, SoD.
-- **AI Gateway** (`services/llm`) — provider abstraction, schema enforcement, retries, budgets,
+- **Invoice Service** - ingestion, files, versions, extracted data, lifecycle commands, search.
+- **Master Data Service** - properties, entities, vendors, GL, users, projects, cost codes, WOs.
+- **Match Engine** - duplicate / PO / contract / work-order / budget matching (explainable scores).
+- **Policy & Approval Service** - versioned policy DSL, approval steps, delegation, escalation, SoD.
+- **AI Gateway** (`services/llm`) - provider abstraction, schema enforcement, retries, budgets,
   tool allow-lists, model-run logging.
-- **Integration Service** (`services/integrations`) — import/export adapters, idempotency,
+- **Integration Service** (`services/integrations`) - import/export adapters, idempotency,
   dead-letter, reconciliation.
-- **Analytics Service** — property/project/vendor/aging/forecast aggregates.
-- **Notification Service** — acknowledgments, reminders, digests (via Mailpit locally).
+- **Analytics Service** - property/project/vendor/aging/forecast aggregates.
+- **Notification Service** - acknowledgments, reminders, digests (via Mailpit locally).
 
 ## Containers
 | Container | Port | Role |
 |---|---|---|
 | web | 3000 | Next.js UI |
 | api | 8000 | REST + OpenAPI, command handlers, bootstrap (migrate+seed) |
-| worker | — | Celery extraction/match/notify/export/payment tasks |
+| worker | - | Celery extraction/match/notify/export/payment tasks |
 | postgres | 5432 | Canonical data, pgvector, outbox, audit |
 | redis | 6379 | Celery broker/result + cache |
 | minio | 9000/9001 | Immutable object storage |
@@ -33,7 +33,7 @@ override path.
 | mock-erp | 4010 | Accounting system of record (export + payments) |
 
 ## Data integrity rules
-- Money is `NUMERIC(18,2)` + Python `Decimal`, explicit currency — never floats.
+- Money is `NUMERIC(18,2)` + Python `Decimal`, explicit currency - never floats.
 - IDs are UUIDv7 (time-ordered). Timestamps are `TIMESTAMPTZ`, UTC.
 - Optimistic locking (`lock_version`) on mutable rows; invoices use SQLAlchemy `version_id_col`.
 - Field provenance: page + normalized bbox + method + model run + confidence.
@@ -56,8 +56,8 @@ preventing the "DB committed but event lost" failure.
 | Duplicate detection | hash + normalized keys + fuzzy + pHash | deterministic | auto-block high-risk |
 | Exception investigator | tool-scoped agent, read-only | claude-opus-4-8 | recommendation w/ citations |
 | Copilot | permission-filtered RAG | claude-sonnet-5 | view over controlled data |
-| Approval routing | versioned policy engine | — | deterministic only |
-| Payment release | external control | — | never delegated to AI |
+| Approval routing | versioned policy engine | - | deterministic only |
+| Payment release | external control | - | never delegated to AI |
 
 ## Auth
 Persona-based dev JWT (seeded users, one per role). RBAC capability × ABAC scope enforced

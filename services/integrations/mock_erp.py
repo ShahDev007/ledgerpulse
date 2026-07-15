@@ -1,4 +1,4 @@
-"""Mock-ERP accounting adapter — HTTP client for the mock-erp service.
+"""Mock-ERP accounting adapter - HTTP client for the mock-erp service.
 
 Translates the canonical invoice into the ERP payload, exports idempotently (Idempotency-Key
 header), and surfaces retryable vs permanent failures so the Integration Service can choose to

@@ -15,7 +15,7 @@ from app.api.v1 import (
 app = FastAPI(
     title="LedgerPulse API",
     version="0.1.0",
-    description="AI-native invoice intelligence — control plane API (interview concept).",
+    description="AI-native invoice intelligence - control plane API (interview concept).",
 )
 
 app.add_middleware(

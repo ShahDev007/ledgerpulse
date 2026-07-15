@@ -59,7 +59,7 @@ export default function Approvals() {
                 {r.tracking_id}
               </Link>
               <div className="text-sm text-navy/70">
-                {r.vendor ?? "—"} · {r.total != null ? `${r.currency} ${r.total.toLocaleString()}` : "—"}
+                {r.vendor ?? "-"} · {r.total != null ? `${r.currency} ${r.total.toLocaleString()}` : "-"}
               </div>
               <div className="text-xs text-navy/40">
                 As {r.required_role} · step {r.step_no}

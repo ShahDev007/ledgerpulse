@@ -15,14 +15,14 @@ from app.config import get_settings
 
 settings = get_settings()
 
-# On serverless (Vercel), pooling across invocations causes stale connections — use NullPool and
+# On serverless (Vercel), pooling across invocations causes stale connections - use NullPool and
 # a fresh connection per request; managed Postgres (Neon) requires TLS.
 _engine_kwargs: dict = {"echo": False}
 _connect_args: dict = {}
 if settings.serverless:
     _engine_kwargs["poolclass"] = NullPool
     # Disable asyncpg prepared-statement cache so we survive even if a pgbouncer (pooled)
-    # URL slips through — pgbouncer transaction pooling breaks server-side prepared statements.
+    # URL slips through - pgbouncer transaction pooling breaks server-side prepared statements.
     _connect_args["statement_cache_size"] = 0
 else:
     _engine_kwargs["pool_pre_ping"] = True

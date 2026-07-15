@@ -1,7 +1,7 @@
 """Pluggable object storage for immutable invoice files.
 
 STORAGE_BACKEND selects the backend:
-  - "postgres" (default on Vercel/hosted): bytes live in the invoice_blobs table — no external
+  - "postgres" (default on Vercel/hosted): bytes live in the invoice_blobs table - no external
     object store, works anywhere Postgres does.
   - "s3": MinIO/S3 via boto3 (local Docker default).
 

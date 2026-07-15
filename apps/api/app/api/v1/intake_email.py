@@ -73,9 +73,9 @@ async def email_intake(
         to_address=from_address,
         subject=f"Received: {subject or 'your invoice'} [{result.tracking_id}]",
         body=(
-            f"Thank you — your invoice has been received and assigned tracking id "
+            f"Thank you - your invoice has been received and assigned tracking id "
             f"{result.tracking_id}. You can reference this id in any correspondence.\n\n"
-            f"— LedgerPulse AP intake"
+            f"- LedgerPulse AP intake"
         ),
         kind="ACK",
         invoice_id=result.invoice_id,

@@ -1,4 +1,4 @@
-"""In-process ERP adapter — same behavior as the mock-erp service, no HTTP/extra container.
+"""In-process ERP adapter - same behavior as the mock-erp service, no HTTP/extra container.
 
 Used on serverless/hosted deployments (ERP_MODE=inprocess). Idempotency is enforced upstream by
 the export ledger (Export table), so this just mints an external id and honors failure tokens.

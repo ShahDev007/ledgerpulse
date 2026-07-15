@@ -38,7 +38,7 @@ async def stats(
 ):
     principal.require("view")
     # ABAC: property-scoped roles (e.g. Property Manager) see only their properties'
-    # invoices — plus not-yet-resolved ones — exactly like the inbox list. Org-wide roles
+    # invoices - plus not-yet-resolved ones - exactly like the inbox list. Org-wide roles
     # (AP, Finance, Asset, Auditor) have no scope and see everything.
     inv_q = select(Invoice)
     if principal.property_scope:

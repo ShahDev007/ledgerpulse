@@ -1,4 +1,4 @@
-"""Alembic environment — targets app Base.metadata via the sync DB URL."""
+"""Alembic environment - targets app Base.metadata via the sync DB URL."""
 from __future__ import annotations
 
 from logging.config import fileConfig

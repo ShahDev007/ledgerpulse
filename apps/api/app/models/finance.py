@@ -51,7 +51,7 @@ class Payment(Base, PKMixin, TimestampMixin):
 
 
 class Export(Base, PKMixin, TimestampMixin):
-    """Export ledger — enforces one export per invoice version + target (idempotency)."""
+    """Export ledger - enforces one export per invoice version + target (idempotency)."""
     __tablename__ = "exports"
     __table_args__ = (
         UniqueConstraint("invoice_id", "invoice_version", "target_system", name="uq_export_idem"),

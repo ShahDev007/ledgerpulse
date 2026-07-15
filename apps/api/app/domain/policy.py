@@ -2,7 +2,7 @@
 
 Policies are authored as YAML in packages/policies/, loaded into approval_policies (immutable
 once active), and evaluated against invoice 'facts'. Conditions use a tiny, safe expression
-grammar (comparisons + AND/OR over invoice.<field>) — no arbitrary code, and policies are
+grammar (comparisons + AND/OR over invoice.<field>) - no arbitrary code, and policies are
 trusted repo artifacts.
 """
 from __future__ import annotations

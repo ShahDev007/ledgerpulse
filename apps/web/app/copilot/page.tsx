@@ -30,7 +30,7 @@ export default function Copilot() {
       <div>
         <h1 className="text-2xl font-semibold">Invoice Copilot</h1>
         <p className="text-navy/70">
-          Natural language is a view over controlled data — answers are grounded in invoices you’re
+          Natural language is a view over controlled data - answers are grounded in invoices you’re
           permitted to see, with citations.
         </p>
       </div>

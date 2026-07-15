@@ -1,7 +1,7 @@
 """Exception investigator command: assemble a read-only evidence snapshot, run the tool-scoped
 Claude agent, and persist the model run + tool calls + cited findings on the exception.
 
-The agent never touches the database — it only sees the snapshot we build here — so it is
+The agent never touches the database - it only sees the snapshot we build here - so it is
 structurally incapable of mutating financial records (Section 4.3).
 """
 from __future__ import annotations
@@ -92,7 +92,7 @@ async def _snapshot(session: AsyncSession, inv: Invoice) -> dict:
         }
     else:
         snap["get_vendor_history"] = {"evidence_id": "ev:vendor_history",
-                                      "note": "vendor unresolved — no history"}
+                                      "note": "vendor unresolved - no history"}
 
     if inv.purchase_order_id:
         po = await session.get(PurchaseOrder, inv.purchase_order_id)

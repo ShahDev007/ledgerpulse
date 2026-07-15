@@ -52,14 +52,14 @@ export default function CommandCenter() {
       </section>
 
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Kpi label="Total invoices" value={s?.total_invoices ?? "—"} href="/inbox" />
+        <Kpi label="Total invoices" value={s?.total_invoices ?? "-"} href="/inbox" />
         <Kpi label="Needs review / matched" value={(s?.by_status?.["MATCHED"] ?? 0) + (s?.by_status?.["NEEDS_REVIEW"] ?? 0)} href="/inbox" />
-        <Kpi label="Pending approval" value={s?.approval_pending ?? "—"} tone="text-blue-700" href="/approvals" />
-        <Kpi label="Open exceptions" value={s?.open_exceptions ?? "—"} tone="text-amber-700" href="/exceptions" />
-        <Kpi label="Blocking (duplicates etc.)" value={s?.blocking_exceptions ?? "—"} tone="text-red-700" href="/exceptions" />
-        <Kpi label="Duplicate-risk invoices" value={s?.duplicate_risk ?? "—"} tone="text-red-700" />
-        <Kpi label="Unbudgeted flags" value={s?.unbudgeted_flags ?? "—"} tone="text-amber-700" />
-        <Kpi label="Open exposure" value={s ? `$${s.total_exposure.toLocaleString()}` : "—"} />
+        <Kpi label="Pending approval" value={s?.approval_pending ?? "-"} tone="text-blue-700" href="/approvals" />
+        <Kpi label="Open exceptions" value={s?.open_exceptions ?? "-"} tone="text-amber-700" href="/exceptions" />
+        <Kpi label="Blocking (duplicates etc.)" value={s?.blocking_exceptions ?? "-"} tone="text-red-700" href="/exceptions" />
+        <Kpi label="Duplicate-risk invoices" value={s?.duplicate_risk ?? "-"} tone="text-red-700" />
+        <Kpi label="Unbudgeted flags" value={s?.unbudgeted_flags ?? "-"} tone="text-amber-700" />
+        <Kpi label="Open exposure" value={s ? `$${s.total_exposure.toLocaleString()}` : "-"} />
       </section>
 
       <section className="rounded-lg border border-navy/10 bg-white p-4 shadow-sm">

@@ -5,14 +5,14 @@ checkpoint before the next begins.
 
 | Phase | Scope | Status |
 |---|---|---|
-| 1 — Scaffold | Monorepo, Docker Compose (postgres+pgvector, redis, minio, mailpit, mock-erp), auth/personas, seed master data, health, UI shell + persona switch | ✅ done & verified |
-| 2 — Invoice core | Invoice/files/audit domain, upload + AP-email intake, immutable storage + SHA-256/pHash, list/detail UI, outbox | ✅ done & verified |
-| 3 — Extraction | **Live Claude** multimodal extraction, InvoiceExtraction schema, field provenance, model-run ledger, workbench + correction UI | ✅ done & verified |
-| 4 — Resolution + match | Claude-based resolution; duplicate/PO/contract/WO/budget/arithmetic/risk engines with feature-level reasons; 8 seed scenarios | ✅ done & verified |
-| 5 — Approval workflow | Versioned policy DSL engine, approvals + SoD + SLA, notifications, command-center KPIs (export mock in Phase 7) | ✅ done & verified |
-| 6 — Exception agent | Read-only tool-scoped investigator (Opus) with allow-list + evidence citations | ✅ done & verified |
-| 7 — Export + payment | Idempotent ERP export + payment sync + reconciliation; retry/permanent failure simulation | ✅ done & verified |
-| 8 — Intelligence + hardening | Copilot (permission-filtered RAG), AI model dashboard, golden evals + unit tests, Playwright e2e specs, demo-reset, docs | ✅ done & verified |
+| 1 - Scaffold | Monorepo, Docker Compose (postgres+pgvector, redis, minio, mailpit, mock-erp), auth/personas, seed master data, health, UI shell + persona switch | ✅ done & verified |
+| 2 - Invoice core | Invoice/files/audit domain, upload + AP-email intake, immutable storage + SHA-256/pHash, list/detail UI, outbox | ✅ done & verified |
+| 3 - Extraction | **Live Claude** multimodal extraction, InvoiceExtraction schema, field provenance, model-run ledger, workbench + correction UI | ✅ done & verified |
+| 4 - Resolution + match | Claude-based resolution; duplicate/PO/contract/WO/budget/arithmetic/risk engines with feature-level reasons; 8 seed scenarios | ✅ done & verified |
+| 5 - Approval workflow | Versioned policy DSL engine, approvals + SoD + SLA, notifications, command-center KPIs (export mock in Phase 7) | ✅ done & verified |
+| 6 - Exception agent | Read-only tool-scoped investigator (Opus) with allow-list + evidence citations | ✅ done & verified |
+| 7 - Export + payment | Idempotent ERP export + payment sync + reconciliation; retry/permanent failure simulation | ✅ done & verified |
+| 8 - Intelligence + hardening | Copilot (permission-filtered RAG), AI model dashboard, golden evals + unit tests, Playwright e2e specs, demo-reset, docs | ✅ done & verified |
 
 ## Phase 1 acceptance
 - `make dev` starts all services; `api` bootstraps (schema + bucket + seed) with no manual steps.
@@ -24,11 +24,11 @@ checkpoint before the next begins.
 - Local schema is created via `Base.metadata.create_all` in `app.bootstrap` for a zero-step
   demo; Alembic is scaffolded (`make migrate`, `make revision`) as the production path.
 - **Real Claude is the default** (`LLM_PROVIDER=anthropic`). The mock provider is demoted to a
-  CI/golden-eval determinism backend and an automatic fallback when no key is present — not the
+  CI/golden-eval determinism backend and an automatic fallback when no key is present - not the
   demo path.
 - **Extraction** runs Claude multimodal vision on the *actual* invoice image/PDF (no separate
   OCR service required).
-- **Resolution** is Claude-based (reasons over candidate master data) — **no embeddings /
+- **Resolution** is Claude-based (reasons over candidate master data) - **no embeddings /
   pgvector**, so no embeddings vendor or key is needed.
 
 ## Phase 1 verification (2026-07-15)
@@ -48,7 +48,7 @@ checkpoint before the next begins.
 - Live Claude connectivity verified (`claude-sonnet-5` round-trip) ahead of Phase 3.
 
 ## Phase 3 verification (2026-07-15)
-- Synthetic invoice PDFs/PNGs rendered for all 8 scenarios (`app/demo_invoices.py`) — real
+- Synthetic invoice PDFs/PNGs rendered for all 8 scenarios (`app/demo_invoices.py`) - real
   content, no hardcoded expected values.
 - **Live Claude** extraction on the actual document image via multimodal tool-use
   (schema-constrained). INV-001: vendor/number/dates/total at 0.99 confidence; digital twin
@@ -68,12 +68,12 @@ Claude-extracted data:
 | Invoice | Outcome |
 |---|---|
 | INV-001 | MATCHED (clean) |
-| INV-002 | RATE_ABOVE_CONTRACT [REVIEW] — 980 > 900 contract rate (+2%) |
-| INV-003 | POSSIBLE_DUPLICATE [BLOCKING] — score 0.9184; invoice_number 1.0 via O/0 normalization |
-| INV-004 | UNKNOWN_VENDOR [REVIEW] — Claude resolver returned no match for "Rainier Roofing Co" |
-| INV-005 | WORK_ORDER_CLOSED [REVIEW] — WO-7710 is CLOSED |
-| INV-006 | UNBUDGETED_SPEND [REVIEW] — 62000 at Maplewood, no budget |
-| INV-007 | MATCHED — credit memo, correctly NOT flagged duplicate |
+| INV-002 | RATE_ABOVE_CONTRACT [REVIEW] - 980 > 900 contract rate (+2%) |
+| INV-003 | POSSIBLE_DUPLICATE [BLOCKING] - score 0.9184; invoice_number 1.0 via O/0 normalization |
+| INV-004 | UNKNOWN_VENDOR [REVIEW] - Claude resolver returned no match for "Rainier Roofing Co" |
+| INV-005 | WORK_ORDER_CLOSED [REVIEW] - WO-7710 is CLOSED |
+| INV-006 | UNBUDGETED_SPEND [REVIEW] - 62000 at Maplewood, no budget |
+| INV-007 | MATCHED - credit memo, correctly NOT flagged duplicate |
 | INV-008 | MATCHED (clean) |
 - Every match writes a `match_results` row with a feature-level reason breakdown; every
   exception carries category / severity / owner_role / evidence.
@@ -97,7 +97,7 @@ Claude-extracted data:
 ## Phase 6 verification (2026-07-15)
 - Read-only tool-scoped investigator agent (`services/llm/investigator.py`): Claude **Opus 4.8**
   runs an agentic loop over a fixed read tool allow-list backed by a pre-built evidence
-  snapshot — structurally cannot touch the DB, mutate, mail, approve, export, or pay. Prohibited
+  snapshot - structurally cannot touch the DB, mutate, mail, approve, export, or pay. Prohibited
   tools don't exist; unknown tool calls are denied.
 - On INV-003 the agent called `get_invoice → search_duplicate_candidates → get_vendor_history →
   get_document_evidence → submit_findings` (4190→2144 tok, 27s) and returned BLOCKING/0.9: caught
@@ -124,15 +124,15 @@ Claude-extracted data:
 - **Copilot** (`/v1/copilot/query`): permission-filtered RAG over the caller's in-scope invoices;
   Claude (sonnet-5) answers grounded with **invoice tracking-id citations**. Verified in browser:
   as the property-scoped Property Manager the answer was computed "over 5 invoices" (vs 8 for AP)
-  — ABAC filtering — and correctly identified the duplicate, payment mismatch, and credit-memo.
+  - ABAC filtering - and correctly identified the duplicate, payment mismatch, and credit-memo.
   Screenshot: `phase8-copilot.png`.
 - **AI model dashboard** (`/v1/model-runs`, gated on `view_model_trace`): per-capability runs,
-  tokens, latency, cost, errors — governance/eval, not a black box.
+  tokens, latency, cost, errors - governance/eval, not a black box.
 - **Tests**: 6 deterministic unit tests pass (normalization, policy DSL incl. sandbox, risk).
   Live golden extraction eval (`test_golden_extraction.py`) checks header accuracy ≥94% (skipped
   without a key). Playwright e2e specs in `apps/web/e2e/`.
 - **`make demo-reset`** (`app.demo_reset`): drop+recreate schema, reseed master data + policies,
-  intake + live-extract + match all 8 invoices — deterministic base demo state.
+  intake + live-extract + match all 8 invoices - deterministic base demo state.
 - Docs: `demo-script.md` (8-min narrative), `architecture.md`, `threat-model.md`, this file.
 
-## Summary — all 8 phases complete and verified end-to-end with live Claude.
+## Summary - all 8 phases complete and verified end-to-end with live Claude.

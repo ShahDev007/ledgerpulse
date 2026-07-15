@@ -2,7 +2,7 @@
 
 The model receives ONLY the rows the caller is allowed to see (built by the domain layer) and
 must ground its answer in them, citing invoice tracking ids. It is a view over controlled data,
-never a replacement for the ledger — no tools, no mutations.
+never a replacement for the ledger - no tools, no mutations.
 """
 from __future__ import annotations
 

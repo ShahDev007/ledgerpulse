@@ -50,7 +50,7 @@ class Settings(BaseSettings):
 
     @property
     def database_url_sync(self) -> str:
-        # psycopg (v3) sync URL, used only by Alembic — never in the serverless path.
+        # psycopg (v3) sync URL, used only by Alembic - never in the serverless path.
         return _resolve_async_url().replace("postgresql+asyncpg://", "postgresql+psycopg://")
 
     @property

@@ -64,7 +64,7 @@ COST_CODES = [
 
 # Scope shapes each persona's view (ABAC). Operational roles are narrowed to the
 # properties/projects they run; control roles (AP, Finance, Director, Auditor) are org-wide
-# on purpose — a controller or auditor with a partial view would be wrong.
+# on purpose - a controller or auditor with a partial view would be wrong.
 PERSONAS = [
     ("ap@ledgerpulse.local", "Alex Park (AP Accountant)", Role.AP_ACCOUNTANT, None),  # org-wide
     ("pm@ledgerpulse.local", "Priya Nair (Property Manager)", Role.PROPERTY_MANAGER, ["prop_park"]),

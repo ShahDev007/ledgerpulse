@@ -32,7 +32,7 @@
       - generic [ref=f2e34]:
         - generic [ref=f2e35]:
           - heading "Invoice Copilot" [level=1] [ref=f2e36]
-          - paragraph [ref=f2e37]: Natural language is a view over controlled data — answers are grounded in invoices you’re permitted to see, with citations.
+          - paragraph [ref=f2e37]: Natural language is a view over controlled data - answers are grounded in invoices you’re permitted to see, with citations.
         - generic [ref=f2e38]:
           - textbox "Ask about invoices, exceptions, vendors, budgets…" [ref=f2e39]: Which invoices are possible duplicates or blocked, and why?
           - button "Thinking…" [disabled] [ref=f2e67]

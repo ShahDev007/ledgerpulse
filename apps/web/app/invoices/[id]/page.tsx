@@ -123,7 +123,7 @@ export default function Workbench({ params }: { params: Promise<{ id: string }> 
   });
   const pay = useMutation({
     mutationFn: (amount: number) => simulatePayment(id, amount),
-    onSuccess: (r: any) => { setNote(r.reconciled ? "Reconciled — fully paid" : "Payment mismatch flagged"); qc.invalidateQueries({ queryKey: ["invoice", id] }); },
+    onSuccess: (r: any) => { setNote(r.reconciled ? "Reconciled - fully paid" : "Payment mismatch flagged"); qc.invalidateQueries({ queryKey: ["invoice", id] }); },
     onError: (e: any) => setNote(`Payment failed: ${e.message}`),
   });
 
@@ -250,7 +250,7 @@ export default function Workbench({ params }: { params: Promise<{ id: string }> 
         return (
           <div className="rounded-lg border border-teal/30 bg-teal/5 p-4">
             <div className="mb-2 flex items-center justify-between">
-              <h2 className="font-semibold text-teal">AI Investigation — {r.issue_type} ({Math.round((r.confidence ?? 0) * 100)}% confidence)</h2>
+              <h2 className="font-semibold text-teal">AI Investigation - {r.issue_type} ({Math.round((r.confidence ?? 0) * 100)}% confidence)</h2>
               <span className="text-xs text-navy/50">
                 read-only agent{investigation ? ` · ${investigation.model} · ${investigation.tokens?.in}→${investigation.tokens?.out} tok · ${(investigation.latency_ms/1000).toFixed(1)}s` : ""}
               </span>
@@ -317,7 +317,7 @@ export default function Workbench({ params }: { params: Promise<{ id: string }> 
           <div className="rounded-lg border border-navy/10 bg-white p-4 shadow-sm">
             <div className="mb-3 flex items-center justify-between">
               <h2 className="font-semibold">Extracted fields
-                <span className="ml-2 text-xs font-normal text-navy/40">recommendation — verify before approval</span>
+                <span className="ml-2 text-xs font-normal text-navy/40">recommendation - verify before approval</span>
               </h2>
               {!editing ? (
                 <button onClick={startEdit} className="text-sm text-teal hover:underline">Edit</button>
@@ -394,7 +394,7 @@ function FieldRow({ label, conf, editing, value, onChange }: {
           <input value={value ?? ""} onChange={(e) => onChange(e.target.value)}
             className={`w-full rounded border px-2 py-1 text-right text-sm ${low ? "border-amber-400" : "border-navy/15"}`} />
         ) : (
-          <span className={`font-medium ${low ? "text-amber-700" : ""}`}>{value ?? <span className="text-navy/30">—</span>}</span>
+          <span className={`font-medium ${low ? "text-amber-700" : ""}`}>{value ?? <span className="text-navy/30">-</span>}</span>
         )}
       </dd>
     </>

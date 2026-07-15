@@ -2,7 +2,7 @@
   "name": "ledgerpulse",
   "private": true,
   "version": "0.1.0",
-  "description": "LedgerPulse — AI-native invoice intelligence platform (interview concept)",
+  "description": "LedgerPulse - AI-native invoice intelligence platform (interview concept)",
   "packageManager": "pnpm@9.12.0",
   "engines": {
     "node": ">=20"

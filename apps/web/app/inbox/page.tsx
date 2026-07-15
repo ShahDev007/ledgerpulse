@@ -106,10 +106,10 @@ export default function Inbox() {
                     {i.tracking_id}
                   </Link>
                 </td>
-                <td className="px-4 py-2">{i.vendor ?? <span className="text-navy/30">—</span>}</td>
-                <td className="px-4 py-2">{i.invoice_number ?? <span className="text-navy/30">—</span>}</td>
+                <td className="px-4 py-2">{i.vendor ?? <span className="text-navy/30">-</span>}</td>
+                <td className="px-4 py-2">{i.invoice_number ?? <span className="text-navy/30">-</span>}</td>
                 <td className="px-4 py-2">
-                  {i.total != null ? `${i.currency} ${i.total.toFixed(2)}` : <span className="text-navy/30">—</span>}
+                  {i.total != null ? `${i.currency} ${i.total.toFixed(2)}` : <span className="text-navy/30">-</span>}
                 </td>
                 <td className="px-4 py-2 text-navy/60">{i.source_type}</td>
                 <td className="px-4 py-2">
@@ -123,7 +123,7 @@ export default function Inbox() {
             {invoices.data?.length === 0 && (
               <tr>
                 <td colSpan={7} className="px-4 py-8 text-center text-navy/40">
-                  No invoices yet — upload one to begin.
+                  No invoices yet - upload one to begin.
                 </td>
               </tr>
             )}

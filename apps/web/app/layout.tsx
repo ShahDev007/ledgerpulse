@@ -4,7 +4,7 @@ import { Providers } from "./providers";
 import { PersonaSwitcher } from "@/components/PersonaSwitcher";
 
 export const metadata: Metadata = {
-  title: "LedgerPulse — Invoice Intelligence",
+  title: "LedgerPulse - Invoice Intelligence",
   description: "AI-native invoice tracking, cost governance, and portfolio intelligence.",
 };
 

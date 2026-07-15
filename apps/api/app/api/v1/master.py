@@ -1,4 +1,4 @@
-"""Read-only master-data endpoints (properties, vendors, GL) — proves seed + authz."""
+"""Read-only master-data endpoints (properties, vendors, GL) - proves seed + authz."""
 from __future__ import annotations
 
 from fastapi import APIRouter, Depends

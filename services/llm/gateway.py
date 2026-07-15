@@ -1,4 +1,4 @@
-"""LLM gateway — the single, provider-neutral entry point for model calls.
+"""LLM gateway - the single, provider-neutral entry point for model calls.
 
 Enforces schema-constrained output (Anthropic tool use), timeouts, bounded retries, and
 captures a ModelRunInfo (provider, model, tokens, latency) for the model_runs ledger. When
@@ -195,7 +195,7 @@ def _mock_extraction() -> InvoiceExtraction:
             "total": {"value": None, "confidence": 0.0},
             "currency": {"value": "USD", "confidence": 0.5},
             "lines": [],
-            "warnings": ["mock provider — set LLM_PROVIDER=anthropic with a key for live extraction"],
+            "warnings": ["mock provider - set LLM_PROVIDER=anthropic with a key for live extraction"],
         }
     )
 

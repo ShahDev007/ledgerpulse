@@ -1,7 +1,7 @@
 """Invoice intake command handler.
 
 A single transactional command: store the immutable original in object storage, persist the
-Invoice + InvoiceFile, and — in the same DB transaction — write the audit event and the outbox
+Invoice + InvoiceFile, and - in the same DB transaction - write the audit event and the outbox
 event. This is the only way an invoice is created; status transitions go through commands, never
 raw updates (Section 3.3).
 """
