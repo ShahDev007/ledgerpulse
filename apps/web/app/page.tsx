@@ -44,8 +44,41 @@ export default function CommandCenter() {
   return (
     <div className="space-y-6">
       <section>
-        <h1 className="text-2xl font-semibold">Command Center</h1>
-        <p className="text-navy/70">
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="text-2xl font-semibold">Command Center</h1>
+          {/* Fancy hover explainer for non-technical stakeholders */}
+          <div className="group relative">
+            <button
+              type="button"
+              className="inline-flex items-center gap-1.5 rounded-full border border-teal/40 bg-teal/5 px-3 py-1 text-xs font-semibold text-teal transition hover:bg-teal hover:text-white"
+            >
+              <span aria-hidden>💡</span> What is this?
+            </button>
+            <div className="invisible absolute left-0 top-full z-30 mt-2 w-[22rem] translate-y-1 opacity-0 transition-all duration-150 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 sm:w-[26rem]">
+              <div className="overflow-hidden rounded-2xl border border-navy/10 bg-white shadow-xl">
+                <div className="bg-gradient-to-br from-navy-900 via-navy to-teal p-4 text-white">
+                  <p className="text-[11px] font-medium uppercase tracking-widest text-teal-light">
+                    LedgerPulse in plain English
+                  </p>
+                  <p className="mt-1 text-sm font-semibold leading-snug">
+                    A smart assistant that reads and checks the bills for a company that owns lots
+                    of buildings.
+                  </p>
+                </div>
+                <ul className="space-y-2 p-4 text-sm text-navy/80">
+                  <li><span aria-hidden>📄</span> <strong>Reads each bill</strong> automatically, using real AI on the real document.</li>
+                  <li><span aria-hidden>🕵️</span> <strong>Catches mistakes</strong> and double-charges before anyone pays twice.</li>
+                  <li><span aria-hidden>🧠</span> <strong>Explains itself</strong> with evidence when something looks wrong.</li>
+                  <li><span aria-hidden>👤</span> <strong>Shows the right bills</strong> to the right people.</li>
+                </ul>
+                <div className="border-t border-navy/10 bg-navy-50 px-4 py-2.5 text-xs text-navy/70">
+                  <span aria-hidden>🔒</span> The AI only advises. A human always approves or pays.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p className="mt-1 text-navy/70">
           Signed in as <strong>{me.data?.full_name}</strong> ({me.data?.role}). From “Where is
           this invoice?” to “What does this cost mean?”
         </p>
