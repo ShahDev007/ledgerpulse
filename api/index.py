@@ -2,6 +2,8 @@
 
 Vercel's @vercel/python runtime serves the module-level ASGI `app`. `vercel.json` rewrites all
 paths to this function, so the whole /v1 API is served from one function.
+
+Build marker: force a clean function rebuild (redeploy-with-only-env can bundle stale).
 """
 import os
 import sys
